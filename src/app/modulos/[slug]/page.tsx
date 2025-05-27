@@ -23,6 +23,13 @@ interface ModulosData {
   [key: string]: Modulo;
 }
 
+// Parâmetros da página
+interface ModuloPageProps {
+  params: {
+    slug: string;
+  };
+}
+
 // Dados de exemplo para os módulos
 const modulosData: ModulosData = {
   "anatomia-cardiaca": {
@@ -165,7 +172,7 @@ const modulosData: ModulosData = {
   }
 };
 
-export default function ModuloPage({ params }: { params: { slug: string } }) {
+export default function ModuloPage({ params }: ModuloPageProps) {
   const modulo = modulosData[params.slug];
 
   // Se o módulo não for encontrado, redireciona para a página 404
