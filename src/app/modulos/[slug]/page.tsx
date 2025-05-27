@@ -161,14 +161,11 @@ const modulosData: ModulosData = {
   }
 };
 
-interface PageProps {
-  params: {
-    slug: string;
-  };
-  searchParams: { [key: string]: string | string[] | undefined };
-}
-
-export default function ModuloPage({ params }: PageProps) {
+export default function ModuloPage({
+  params,
+}: Readonly<{
+  params: { slug: string };
+}>) {
   const modulo = modulosData[params.slug];
 
   // Se o módulo não for encontrado, redireciona para a página 404
