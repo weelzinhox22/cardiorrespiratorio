@@ -51,9 +51,11 @@ export function MotionHover({
       hover: { 
         scale: intensityValues[intensity].scale,
         boxShadow: intensityValues[intensity].shadow,
+        backgroundColor: "#000000",
       },
       tap: { 
-        scale: 0.98
+        scale: 0.98,
+        backgroundColor: "#000000",
       }
     },
     secondary: {
@@ -63,26 +65,34 @@ export function MotionHover({
         boxShadow: "0px 0px 0px rgba(0,0,0,0)",
       },
       hover: {
-        backgroundColor: "var(--accent)",
+        backgroundColor: "#000000",
+        color: "#ffffff",
         y: -2,
         boxShadow: "0px 2px 4px rgba(0,0,0,0.1)",
       },
       tap: {
         y: 0,
+        backgroundColor: "#000000",
+        color: "#ffffff",
         boxShadow: "0px 0px 0px rgba(0,0,0,0)",
       }
     },
     subtle: {
       rest: {
         x: 0,
-        opacity: 0.9
+        opacity: 0.9,
+        color: "rgba(0, 0, 0, 0.7)"
       },
       hover: {
         x: 3,
-        opacity: 1
+        opacity: 1,
+        color: "#000000",
+        backgroundColor: "transparent"
       },
       tap: {
-        x: 1
+        x: 1,
+        color: "#000000",
+        backgroundColor: "transparent"
       }
     },
     scale: {
@@ -90,10 +100,14 @@ export function MotionHover({
         scale: 1
       },
       hover: { 
-        scale: intensityValues[intensity].scale
+        scale: intensityValues[intensity].scale,
+        backgroundColor: "#000000",
+        color: "#ffffff",
       },
       tap: { 
-        scale: 0.98
+        scale: 0.98,
+        backgroundColor: "#000000",
+        color: "#ffffff",
       }
     },
     lift: {
@@ -103,11 +117,15 @@ export function MotionHover({
       },
       hover: { 
         y: intensityValues[intensity].y,
-        boxShadow: intensityValues[intensity].shadow
+        boxShadow: intensityValues[intensity].shadow,
+        backgroundColor: "#000000",
+        color: "#ffffff",
       },
       tap: { 
         y: -1,
-        boxShadow: "0px 1px 2px rgba(0,0,0,0.1)"
+        boxShadow: "0px 1px 2px rgba(0,0,0,0.1)",
+        backgroundColor: "#000000",
+        color: "#ffffff",
       }
     },
     glow: {
@@ -115,10 +133,14 @@ export function MotionHover({
         boxShadow: "0px 0px 0px rgba(var(--primary-rgb), 0)" 
       },
       hover: { 
-        boxShadow: `0px 0px ${intensity === "sm" ? "8px" : intensity === "md" ? "12px" : "16px"} rgba(var(--primary-rgb), ${intensity === "sm" ? "0.2" : intensity === "md" ? "0.3" : "0.4"})` 
+        boxShadow: `0px 0px ${intensity === "sm" ? "8px" : intensity === "md" ? "12px" : "16px"} rgba(0, 0, 0, ${intensity === "sm" ? "0.2" : intensity === "md" ? "0.3" : "0.4"})`,
+        backgroundColor: "#000000",
+        color: "#ffffff",
       },
       tap: { 
-        boxShadow: `0px 0px ${intensity === "sm" ? "4px" : intensity === "md" ? "8px" : "12px"} rgba(var(--primary-rgb), ${intensity === "sm" ? "0.15" : intensity === "md" ? "0.25" : "0.35"})` 
+        boxShadow: `0px 0px ${intensity === "sm" ? "4px" : intensity === "md" ? "8px" : "12px"} rgba(0, 0, 0, ${intensity === "sm" ? "0.15" : intensity === "md" ? "0.25" : "0.35"})`,
+        backgroundColor: "#000000",
+        color: "#ffffff",
       }
     }
   };

@@ -140,6 +140,7 @@ export default function QuestoesResolucao() {
     hover: { 
       scale: 1.02,
       boxShadow: "0px 3px 10px rgba(0,0,0,0.1)",
+      backgroundColor: "#000000",
       transition: {
         type: "spring", 
         stiffness: 400, 
@@ -149,6 +150,7 @@ export default function QuestoesResolucao() {
     tap: { 
       scale: 0.98,
       boxShadow: "0px 1px 5px rgba(0,0,0,0.1)",
+      backgroundColor: "#000000",
       transition: {
         type: "spring", 
         stiffness: 500, 
@@ -420,14 +422,14 @@ export default function QuestoesResolucao() {
                         <Button 
                           onClick={verificarResposta}
                           disabled={respostaSelecionada === null}
-                          className="bg-primary hover:bg-primary/90"
+                          className="bg-neutral-800 hover:bg-black"
                         >
                           Verificar
                         </Button>
                       ) : (
                         <Button 
                           onClick={proximaQuestao}
-                          className="bg-primary hover:bg-primary/90 flex items-center gap-1"
+                          className="bg-neutral-800 hover:bg-black flex items-center gap-1"
                         >
                           {questaoAtual < questoes.length - 1 ? (
                             <>Próxima <ArrowRight className="h-4 w-4" /></>
@@ -533,7 +535,7 @@ export default function QuestoesResolucao() {
               <CardFooter className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Button 
                   onClick={reiniciarQuiz} 
-                  className="w-full sm:w-auto flex items-center gap-1"
+                  className="w-full sm:w-auto flex items-center gap-1 bg-neutral-800 hover:bg-black"
                 >
                   <RotateCcw className="h-4 w-4" /> Tentar Novamente
                 </Button>

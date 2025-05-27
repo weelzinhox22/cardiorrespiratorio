@@ -55,6 +55,7 @@ const buttonVariants = {
   hover: { 
     scale: 1.05, 
     boxShadow: "0px 5px 15px rgba(0,0,0,0.1)",
+    backgroundColor: "#000000",
     transition: {
       type: "spring", 
       stiffness: 400, 
@@ -64,6 +65,7 @@ const buttonVariants = {
   tap: { 
     scale: 0.95, 
     boxShadow: "0px 2px 5px rgba(0,0,0,0.05)",
+    backgroundColor: "#000000",
     transition: {
       type: "spring", 
       stiffness: 500, 
@@ -173,7 +175,7 @@ export default function Home() {
               <Link href="/modulos">
                 <Button 
                   size="lg" 
-                  className="w-full sm:w-auto"
+                  className="w-full sm:w-auto bg-neutral-800"
                   asChild
                 >
                   <motion.div
@@ -402,7 +404,7 @@ export default function Home() {
             transition={{ duration: 0.5, delay: 0.6 }}
           >
             <Link href="/modulos">
-              <Button size="lg" className="px-8" asChild>
+              <Button size="lg" className="px-8 bg-neutral-800" asChild>
                 <motion.div
                   initial="initial"
                   whileHover="hover"

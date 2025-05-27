@@ -39,8 +39,8 @@ export default function RootLayout({
         )}
       >
         {/* Variáveis CSS para o sistema de design consistente */}
-        <div className="contents [--primary-rgb:59,130,246] [--secondary-rgb:99,102,241] [--accent-rgb:16,185,129]">
-          <div className="contents [--primary:hsl(217,91%,60%)] [--primary-light:hsl(217,91%,70%)] [--primary-dark:hsl(217,91%,50%)]">
+        <div className="contents [--primary-rgb:38,38,38] [--secondary-rgb:99,102,241] [--accent-rgb:16,185,129]">
+          <div className="contents [--primary:hsl(0,0%,15%)] [--primary-light:hsl(0,0%,25%)] [--primary-dark:hsl(0,0%,0%)]">
             <div className="contents [--secondary:hsl(244,92%,67%)] [--secondary-light:hsl(244,92%,77%)] [--secondary-dark:hsl(244,92%,57%)]">
               <div className="contents [--accent:hsl(160,84%,39%)] [--accent-light:hsl(160,84%,49%)] [--accent-dark:hsl(160,84%,29%)]">
                 {children}

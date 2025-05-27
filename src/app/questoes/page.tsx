@@ -168,7 +168,7 @@ export default function Questoes() {
             <div className="flex gap-3 mt-6">
               <Link href="/questoes/resolucao">
                 <Button 
-                  className="bg-primary hover:bg-primary/90 flex items-center gap-2"
+                  className="bg-neutral-800 hover:bg-black flex items-center gap-2"
                   asChild
                 >
                   <Motion
@@ -285,7 +285,7 @@ export default function Questoes() {
                     </MotionDialog>
                     
                     <Link href={`/questoes/resolucao?id=${questoes[index].id}`} className="flex-1">
-                      <Button className="w-full bg-primary hover:bg-primary/90">
+                      <Button className="w-full bg-neutral-800 hover:bg-black">
                         <Motion
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}

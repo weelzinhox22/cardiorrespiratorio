@@ -171,12 +171,12 @@ const buttonVariants = {
   initial: { 
     scale: 1,
     boxShadow: "0px 0px 0px rgba(0,0,0,0)",
-    backgroundColor: "var(--primary)" 
+    backgroundColor: "rgb(38, 38, 38)" 
   },
   hover: { 
     scale: 1.03, 
     boxShadow: "0px 5px 15px rgba(0,0,0,0.15)",
-    backgroundColor: "var(--primary-dark)",
+    backgroundColor: "#000000",
     transition: {
       type: "spring", 
       stiffness: 400, 
@@ -186,6 +186,7 @@ const buttonVariants = {
   tap: { 
     scale: 0.97, 
     boxShadow: "0px 2px 5px rgba(0,0,0,0.1)",
+    backgroundColor: "#000000",
     transition: {
       type: "spring", 
       stiffness: 500, 
@@ -282,7 +283,7 @@ export default function Modulos() {
                     <MotionDialogTrigger asChild>
                       <Button variant="outline" size="sm" className="flex-1">
                         <MotionHover
-                          type="subtle"
+                          type="lift"
                           className="flex items-center gap-1"
                         >
                           <Info className="h-4 w-4 mr-1" />
@@ -341,7 +342,7 @@ export default function Modulos() {
                   </MotionDialog>
                   
                   <Link href={`/modulos/${modulos[index].id}`} className="flex-1">
-                    <Button className="w-full" size="sm">
+                    <Button className="w-full hover:bg-black bg-neutral-800" size="sm">
                       <MotionHover
                         type="primary"
                         className="flex items-center gap-1 w-full justify-center"
