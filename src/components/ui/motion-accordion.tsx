@@ -87,7 +87,7 @@ interface MotionAccordionContentProps {
   children?: React.ReactNode;
   forceMount?: boolean;
   open?: boolean;
-  [key: string]: any;
+  [key: string]: unknown; // Usar unknown em vez de any
 }
 
 function MotionAccordionContent({

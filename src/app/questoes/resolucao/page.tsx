@@ -5,7 +5,7 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import { SpinnerLoading, ProgressLoading, LoadingContainer } from "@/components/ui/motion-loading";
+import { SpinnerLoading, LoadingContainer } from "@/components/ui/motion-loading";
 import Link from "next/link";
 import { CheckCircle, XCircle, ArrowLeft, ArrowRight, Home, RotateCcw } from "lucide-react";
 
@@ -128,47 +128,6 @@ export default function QuestoesResolucao() {
       transition: {
         duration: 0.2
       }
-    }
-  };
-  
-  const buttonVariants = {
-    initial: { 
-      scale: 1,
-      backgroundColor: "var(--primary)",
-      color: "white"
-    },
-    hover: { 
-      scale: 1.02,
-      boxShadow: "0px 3px 10px rgba(0,0,0,0.1)",
-      backgroundColor: "#000000",
-      transition: {
-        type: "spring", 
-        stiffness: 400, 
-        damping: 10
-      }
-    },
-    tap: { 
-      scale: 0.98,
-      boxShadow: "0px 1px 5px rgba(0,0,0,0.1)",
-      backgroundColor: "#000000",
-      transition: {
-        type: "spring", 
-        stiffness: 500, 
-        damping: 15
-      }
-    },
-    selected: {
-      backgroundColor: "var(--primary-light)",
-      scale: 1.03,
-      boxShadow: "0px 3px 10px rgba(0,0,0,0.15)"
-    },
-    correct: {
-      backgroundColor: "var(--green-600)",
-      scale: 1.03
-    },
-    incorrect: {
-      backgroundColor: "var(--red-600)",
-      scale: 0.98
     }
   };
 

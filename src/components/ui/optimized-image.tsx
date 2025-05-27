@@ -3,6 +3,7 @@
 import * as React from "react"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
+import { motion } from "framer-motion"
 
 interface OptimizedImageProps extends React.ComponentProps<typeof Image> {
   fallback?: string;
@@ -146,16 +147,23 @@ export function AvatarImage({
         className
       )}
     >
-      <Image
-        src={src}
-        alt={alt}
-        width={sizes[size]}
-        height={sizes[size]}
-        className="object-cover w-full h-full"
-        onError={() => setError(true)}
-        loading="lazy"
-        {...props}
-      />
+      <div className="flex items-center justify-center w-full h-full">
+        <motion.div
+          className="relative w-full h-full"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4 }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={src}
+            alt={alt}
+            className={cn("object-cover", className)}
+            loading="lazy"
+            {...props}
+          />
+        </motion.div>
+      </div>
     </div>
   );
 } 

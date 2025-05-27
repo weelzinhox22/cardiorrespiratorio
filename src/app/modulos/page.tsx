@@ -4,7 +4,7 @@ import { Navigation } from "@/components/navigation";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { useTrail, animated, config } from "@react-spring/web";
+import { useTrail } from "@react-spring/web";
 import Link from "next/link";
 import { useState } from "react";
 import { 
@@ -166,38 +166,7 @@ const modulos = [
   }
 ];
 
-// Variantes para animações de botões
-const buttonVariants = {
-  initial: { 
-    scale: 1,
-    boxShadow: "0px 0px 0px rgba(0,0,0,0)",
-    backgroundColor: "rgb(38, 38, 38)" 
-  },
-  hover: { 
-    scale: 1.03, 
-    boxShadow: "0px 5px 15px rgba(0,0,0,0.15)",
-    backgroundColor: "#000000",
-    transition: {
-      type: "spring", 
-      stiffness: 400, 
-      damping: 10
-    }
-  },
-  tap: { 
-    scale: 0.97, 
-    boxShadow: "0px 2px 5px rgba(0,0,0,0.1)",
-    backgroundColor: "#000000",
-    transition: {
-      type: "spring", 
-      stiffness: 500, 
-      damping: 15
-    }
-  }
-};
-
 export default function Modulos() {
-  const [openAccordion, setOpenAccordion] = useState<string | null>(null);
-  
   // Configuração do React Spring para a animação em cascata
   const trail = useTrail(modulos.length, {
     from: { opacity: 0, y: 60, scale: 0.9 },

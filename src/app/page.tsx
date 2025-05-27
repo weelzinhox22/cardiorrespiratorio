@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Navigation } from "@/components/navigation";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useTrail, animated, config } from "@react-spring/web";
+import { useTrail, animated } from "@react-spring/web";
 import Link from "next/link";
 import { useRef } from "react";
 

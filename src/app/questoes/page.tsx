@@ -4,27 +4,21 @@ import { Navigation } from "@/components/navigation";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { useTrail, animated, config } from "@react-spring/web";
+import { useTrail, animated } from "@react-spring/web";
 import Link from "next/link";
 import { useState, useEffect, Suspense } from "react";
 import {
   MotionDialog,
   MotionDialogContent,
-  MotionDialogDescription,
-  MotionDialogHeader,
-  MotionDialogTitle,
   MotionDialogTrigger,
 } from "@/components/ui/motion-dialog";
 import { 
-  SpinnerLoading, 
-  ProgressLoading, 
   DotsLoading, 
-  PulseLoading,
-  LoadingContainer
+  LoadingContainer,
+  ProgressLoading
 } from "@/components/ui/motion-loading";
 import { CardGridSkeleton } from "@/components/ui/motion-skeleton";
-import { OptimizedImage } from "@/components/ui/optimized-image";
-import { FadeIn, Motion, MotionPresence } from "@/components/ui/optimized-framer";
+import { FadeIn, Motion } from "@/components/ui/optimized-framer";
 import { Heading, Text, Section } from "@/components/ui/design-system";
 import dynamic from "next/dynamic";
 
@@ -117,7 +111,6 @@ export default function Questoes() {
   const [questoes, setQuestoes] = useState<typeof questoesData>([]);
   const [loading, setLoading] = useState(true);
   const [loadingQuestion, setLoadingQuestion] = useState(false);
-  const [selectedQuestion, setSelectedQuestion] = useState<number | null>(null);
   
   // Simular carregamento de dados ao iniciar
   useEffect(() => {
@@ -136,7 +129,6 @@ export default function Questoes() {
   
   // Simular carregamento ao abrir questão específica
   const handleOpenQuestion = (id: number) => {
-    setSelectedQuestion(id);
     setLoadingQuestion(true);
     
     // Simular carregamento de detalhes da questão

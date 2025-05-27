@@ -5,9 +5,10 @@ import {
   LazyMotion, 
   domAnimation, 
   m, 
-  MotionProps, 
   AnimatePresence,
-  HTMLMotionProps
+  HTMLMotionProps,
+  useAnimation,
+  useInView
 } from "framer-motion"
 import { cn } from "@/lib/utils"
 
