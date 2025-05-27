@@ -1,35 +1,53 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Toaster } from "@/components/ui/sonner";
+import { Inter as FontSans } from "next/font/google";
+import { cn } from "@/lib/utils";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Otimizar carregamento da fonte
+const fontSans = FontSans({
   subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap", // Garantir que o texto seja exibido mesmo enquanto a fonte carrega
+  preload: true,
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata: Metadata = {
-  title: "Fisioterapia Cardiorrespiratória - Portal de Estudos",
-  description: "Site para estudos em fisioterapia cardiorrespiratória",
+export const metadata = {
+  title: "Cardio Site - Fisioterapia Cardiorrespiratória",
+  description: "Site dedicado ao estudo da fisioterapia cardiorrespiratória",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" suppressHydrationWarning>
+      <head>
+        <link rel="icon" href="/favicon.ico" />
+        {/* Preload das imagens críticas */}
+        <link 
+          rel="preload" 
+          href="/images/hero-bg.jpg" 
+          as="image"
+          type="image/jpeg"
+        />
+      </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 dark:from-neutral-950 dark:to-neutral-900`}
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable
+        )}
       >
-        {children}
-        <Toaster />
+        {/* Variáveis CSS para o sistema de design consistente */}
+        <div className="contents [--primary-rgb:59,130,246] [--secondary-rgb:99,102,241] [--accent-rgb:16,185,129]">
+          <div className="contents [--primary:hsl(217,91%,60%)] [--primary-light:hsl(217,91%,70%)] [--primary-dark:hsl(217,91%,50%)]">
+            <div className="contents [--secondary:hsl(244,92%,67%)] [--secondary-light:hsl(244,92%,77%)] [--secondary-dark:hsl(244,92%,57%)]">
+              <div className="contents [--accent:hsl(160,84%,39%)] [--accent-light:hsl(160,84%,49%)] [--accent-dark:hsl(160,84%,29%)]">
+                {children}
+              </div>
+            </div>
+          </div>
+        </div>
       </body>
     </html>
   );
