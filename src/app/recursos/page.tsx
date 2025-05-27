@@ -3,9 +3,10 @@
 import { Navigation } from "@/components/navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 interface RecursoItem {
   titulo: string;
@@ -103,6 +104,12 @@ const itemVariants = {
 };
 
 export default function RecursosPage() {
+  const [currentTab, setCurrentTab] = useState<string>("glossario");
+
+  const handleTabChange = (value: string) => {
+    setCurrentTab(value);
+  };
+
   return (
     <>
       <Navigation />
@@ -119,7 +126,12 @@ export default function RecursosPage() {
           </p>
         </motion.div>
 
-        <Tabs defaultValue="glossario" className="w-full">
+        <Tabs 
+          defaultValue="glossario" 
+          className="w-full"
+          onValueChange={handleTabChange}
+          value={currentTab}
+        >
           <TabsList className="grid grid-cols-4 mb-8">
             <TabsTrigger value="glossario">Glossário</TabsTrigger>
             <TabsTrigger value="artigos">Artigos</TabsTrigger>
@@ -127,46 +139,84 @@ export default function RecursosPage() {
             <TabsTrigger value="bibliografia">Bibliografia</TabsTrigger>
           </TabsList>
           
-          {Object.keys(recursos).map((categoria) => (
-            <TabsContent key={categoria} value={categoria}>
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-                className="grid grid-cols-1 md:grid-cols-2 gap-6"
-              >
-                {recursos[categoria].map((item, index) => (
-                  <motion.div key={index} variants={itemVariants}>
-                    <Card className="h-full border border-neutral-200 dark:border-neutral-700 hover:shadow-md transition-shadow">
-                      <CardHeader>
-                        <CardTitle>{item.titulo}</CardTitle>
-                        {categoria === 'artigos' || categoria === 'videos' ? (
-                          <CardDescription>{item.descricao}</CardDescription>
-                        ) : null}
-                      </CardHeader>
-                      <CardContent>
-                        {categoria === 'glossario' || categoria === 'bibliografia' ? (
-                          <div className="whitespace-pre-line">
-                            {item.descricao}
-                          </div>
-                        ) : null}
-                        
-                        {item.link && (
-                          <div className="mt-4">
-                            <Link href={item.link} target="_blank" rel="noopener noreferrer">
-                              <Button variant="outline" size="sm">
-                                Acessar {categoria === 'artigos' ? 'Artigo' : 'Vídeo'} →
-                              </Button>
-                            </Link>
-                          </div>
-                        )}
-                      </CardContent>
-                    </Card>
+          <AnimatePresence mode="wait">
+            {Object.keys(recursos).map((categoria) => (
+              <TabsContent key={categoria} value={categoria}>
+                <motion.div
+                  key={categoria}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ 
+                    duration: 0.3, 
+                    ease: "easeInOut" 
+                  }}
+                >
+                  <motion.div
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                    className="grid grid-cols-1 md:grid-cols-2 gap-6"
+                  >
+                    {recursos[categoria].map((item, index) => (
+                      <motion.div 
+                        key={index} 
+                        variants={itemVariants}
+                        custom={index}
+                        transition={{
+                          delay: index * 0.1,
+                          type: "spring",
+                          stiffness: 100,
+                          damping: 15
+                        }}
+                      >
+                        <Card className="h-full border border-neutral-200 dark:border-neutral-700 hover:shadow-lg shadow-md transition-all duration-300 rounded-xl overflow-hidden">
+                          <CardHeader>
+                            <CardTitle>{item.titulo}</CardTitle>
+                            {categoria === 'artigos' || categoria === 'videos' ? (
+                              <CardDescription>{item.descricao}</CardDescription>
+                            ) : null}
+                          </CardHeader>
+                          <CardContent>
+                            {categoria === 'glossario' || categoria === 'bibliografia' ? (
+                              <div className="whitespace-pre-line">
+                                {item.descricao}
+                              </div>
+                            ) : null}
+                            
+                            {item.link && (
+                              <div className="mt-4">
+                                <Link href={item.link} target="_blank" rel="noopener noreferrer">
+                                  <Button variant="outline" size="sm" asChild>
+                                    <motion.div
+                                      whileHover={{ scale: 1.03, boxShadow: "0px 4px 8px rgba(0,0,0,0.1)" }}
+                                      whileTap={{ scale: 0.97 }}
+                                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                                      className="flex items-center gap-1"
+                                    >
+                                      Acessar {categoria === 'artigos' ? 'Artigo' : 'Vídeo'}
+                                      <motion.span
+                                        className="ml-1"
+                                        initial={{ x: 0 }}
+                                        whileHover={{ x: 3 }}
+                                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                                      >
+                                        →
+                                      </motion.span>
+                                    </motion.div>
+                                  </Button>
+                                </Link>
+                              </div>
+                            )}
+                          </CardContent>
+                        </Card>
+                      </motion.div>
+                    ))}
                   </motion.div>
-                ))}
-              </motion.div>
-            </TabsContent>
-          ))}
+                </motion.div>
+              </TabsContent>
+            ))}
+          </AnimatePresence>
         </Tabs>
       </main>
     </>

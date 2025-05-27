@@ -43,7 +43,7 @@ export default function RootLayout({
           <div className="contents [--primary:hsl(0,0%,15%)] [--primary-light:hsl(0,0%,25%)] [--primary-dark:hsl(0,0%,0%)]">
             <div className="contents [--secondary:hsl(244,92%,67%)] [--secondary-light:hsl(244,92%,77%)] [--secondary-dark:hsl(244,92%,57%)]">
               <div className="contents [--accent:hsl(160,84%,39%)] [--accent-light:hsl(160,84%,49%)] [--accent-dark:hsl(160,84%,29%)]">
-                {children}
+        {children}
               </div>
             </div>
           </div>

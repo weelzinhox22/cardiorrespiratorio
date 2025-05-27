@@ -46,39 +46,12 @@ const descriptionVariants = {
   }
 };
 
-// Variantes para animações de botões
-const buttonVariants = {
-  initial: { 
-    scale: 1,
-    boxShadow: "0px 0px 0px rgba(0,0,0,0)" 
-  },
-  hover: { 
-    scale: 1.05, 
-    boxShadow: "0px 5px 15px rgba(0,0,0,0.1)",
-    backgroundColor: "#000000",
-    transition: {
-      type: "spring", 
-      stiffness: 400, 
-      damping: 10
-    }
-  },
-  tap: { 
-    scale: 0.95, 
-    boxShadow: "0px 2px 5px rgba(0,0,0,0.05)",
-    backgroundColor: "#000000",
-    transition: {
-      type: "spring", 
-      stiffness: 500, 
-      damping: 15
-    }
-  }
-};
-
 // Variantes para links
 const linkVariants = {
   initial: { x: 0 },
   hover: { 
     x: 5,
+    color: "#2563eb",
     transition: {
       type: "spring", 
       stiffness: 400, 
@@ -91,6 +64,32 @@ const linkVariants = {
       type: "spring", 
       stiffness: 400, 
       damping: 10
+    }
+  }
+};
+
+// Variantes para os cards
+const cardsContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.1,
+    }
+  }
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 15,
+      duration: 0.6
     }
   }
 };
@@ -113,19 +112,35 @@ export default function Home() {
     {
       title: "Módulos de Estudo",
       description: "Conteúdo organizado por temas, com material teórico baseado nos slides da professora.",
-      icon: "📚",
+      icon: (
+        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-blue-500 dark:text-blue-400">
+          <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M8 7h6M8 11h8M8 15h5" strokeLinecap="round"/>
+        </svg>
+      ),
       link: "/modulos"
     },
     {
       title: "Banco de Questões",
       description: "Pratique com questões de múltipla escolha e verdadeiro/falso para testar seus conhecimentos.",
-      icon: "❓",
+      icon: (
+        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-purple-500 dark:text-purple-400">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M12 16v-4M12 8h.01" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M9 10.6c0-1 .8-1.8 1.8-1.8h2.4c1 0 1.8.8 1.8 1.8v0c0 1-.8 1.8-1.8 1.8h-1.2v1.2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      ),
       link: "/questoes"
     },
     {
       title: "Recursos Adicionais",
       description: "Glossários, artigos, vídeos e outros materiais complementares para aprofundar seu aprendizado.",
-      icon: "📋",
+      icon: (
+        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-red-500 dark:text-red-400">
+          <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M12 5v3M5 12h3" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      ),
       link: "/recursos"
     }
   ];
@@ -142,26 +157,26 @@ export default function Home() {
     <>
       <Navigation />
       <main className="container mx-auto py-10 px-4 max-w-6xl">
-        <section className="flex flex-col md:flex-row gap-8 py-12 min-h-[80vh] items-center">
+        <section className="flex flex-col md:flex-row gap-8 py-12 min-h-[80vh] items-center bg-gradient-to-br from-white to-blue-50 dark:from-neutral-950 dark:to-blue-950/20">
           <motion.div 
             className="flex-1"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
           >
             <motion.h1 
-              className="text-4xl md:text-5xl font-bold mb-6 text-neutral-900 dark:text-neutral-50"
-              initial={{ opacity: 0, y: -20 }}
+              className="text-5xl md:text-6xl font-extrabold mb-6 text-neutral-900 dark:text-neutral-50 leading-tight"
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
+              transition={{ delay: 0.2, duration: 0.6, ease: "easeOut" }}
             >
               Bem-vindo ao Portal de Estudos em Fisioterapia Cardiorrespiratória
             </motion.h1>
             <motion.p 
               className="text-lg mb-8 text-neutral-700 dark:text-neutral-300"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4, duration: 0.5 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.6, ease: "easeOut" }}
             >
               Este é um espaço dedicado ao aprendizado e aprofundamento dos seus conhecimentos em fisioterapia cardiorrespiratória. 
               Aqui você encontrará material organizado, questões de estudo e recursos complementares.
@@ -170,7 +185,7 @@ export default function Home() {
               className="flex flex-col sm:flex-row gap-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.5 }}
+              transition={{ delay: 0.6, duration: 0.6, ease: "easeOut" }}
             >
               <Link href="/modulos">
                 <Button 
@@ -179,10 +194,9 @@ export default function Home() {
                   asChild
                 >
                   <motion.div
-                    initial="initial"
-                    whileHover="hover"
-                    whileTap="tap"
-                    variants={buttonVariants}
+                    whileHover={{ scale: 1.03, boxShadow: "0px 4px 8px rgba(0,0,0,0.1)" }}
+                    whileTap={{ scale: 0.97 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
                     className="px-6 py-2 flex items-center justify-center"
                   >
                     Iniciar Estudos
@@ -197,10 +211,9 @@ export default function Home() {
                   asChild
                 >
                   <motion.div
-                    initial="initial"
-                    whileHover="hover"
-                    whileTap="tap"
-                    variants={buttonVariants}
+                    whileHover={{ scale: 1.03, boxShadow: "0px 4px 8px rgba(0,0,0,0.1)" }}
+                    whileTap={{ scale: 0.97 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
                     className="px-6 py-2 flex items-center justify-center"
                   >
                     Testar Conhecimentos
@@ -214,39 +227,78 @@ export default function Home() {
             className="flex-1 flex items-center justify-center"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3, type: "spring", stiffness: 100 }}
+            transition={{ delay: 0.8, duration: 0.7, type: "spring", stiffness: 100 }}
           >
-            <div className="relative w-full max-w-md h-[300px] bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-2xl shadow-lg overflow-hidden flex items-center justify-center">
-              <svg 
-                viewBox="0 0 200 200" 
-                className="w-full h-full absolute opacity-20"
+            <div className="relative w-full max-w-md h-[350px] bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-2xl shadow-lg overflow-hidden flex items-center justify-center">
+              {/* Ícone de ECG animado */}
+              <motion.svg 
+                viewBox="0 0 200 100" 
+                className="absolute w-full h-full opacity-20"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: 0.2 }}
+                transition={{ duration: 2, delay: 1.2, ease: "easeInOut" }}
               >
-                <path 
-                  fill="none" 
-                  stroke="currentColor" 
-                  strokeWidth="3"
-                  d="M50,100 A50,50 0 1,1 150,100 A50,50 0 1,1 50,100 Z" 
-                  className="text-blue-500 dark:text-blue-300"
-                />
                 <motion.path 
-                  d="M100,90 Q120,60 140,90 T180,90"
+                  d="M0,50 L30,50 L40,20 L50,80 L60,35 L70,50 L100,50 L110,50 L120,20 L130,80 L140,35 L150,50 L180,50 L200,50"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
-                  className="text-red-500 dark:text-red-300"
+                  className="text-red-500 dark:text-red-400"
                   initial={{ pathLength: 0 }}
                   animate={{ pathLength: 1 }}
-                  transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
+                  transition={{ duration: 3, delay: 1.5, repeat: Infinity, repeatType: "loop", repeatDelay: 1 }}
                 />
-              </svg>
-              <div className="z-10 text-center p-6">
+              </motion.svg>
+              
+              {/* Ícone de coração pulsante */}
+              <motion.div
+                className="absolute top-10 right-10 text-red-500 dark:text-red-400 opacity-20"
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: [0.2, 0.3, 0.2], scale: [1, 1.1, 1] }}
+                transition={{ 
+                  opacity: { delay: 1.8, duration: 2, repeat: Infinity, repeatType: "reverse" },
+                  scale: { delay: 1.8, duration: 2, repeat: Infinity, repeatType: "reverse" }
+                }}
+              >
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                </svg>
+              </motion.div>
+              
+              {/* Ícone de pulmões */}
+              <motion.div
+                className="absolute bottom-10 left-10 text-blue-500 dark:text-blue-400 opacity-20"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ 
+                  opacity: [0.2, 0.3, 0.2],
+                  scale: [1, 1.05, 1], 
+                  y: [0, -5, 0]
+                }}
+                transition={{ 
+                  delay: 2,
+                  duration: 4, 
+                  repeat: Infinity, 
+                  repeatType: "reverse" 
+                }}
+              >
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M15.5,15.35V8.66C15.5,6.09 12.42,4 9.5,4C6.58,4 3.5,6.09 3.5,8.66V15.35C2.58,15.82 2,16.79 2,17.89V19.5H17V17.89C17,16.79 16.42,15.82 15.5,15.35M5.5,15.2V8.66C5.5,7.21 7.31,6 9.5,6C11.69,6 13.5,7.21 13.5,8.66V15.2C12.84,15.07 12.18,15 11.5,15H7.5C6.82,15 6.16,15.07 5.5,15.2M16.72,15.47L16,16.32L17.23,17.21L15.88,19L17.05,19.91L18.4,18.12L19.43,18.91L19.93,17L17.72,15.47M20.91,18.9L22,20.5H17.63L16,19.05L15.12,18.27L17.68,17.17L18.47,17.74L19.97,16.63L20.91,18.9Z" />
+                </svg>
+              </motion.div>
+              
+              <motion.div 
+                className="z-10 text-center p-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.2, duration: 0.6 }}
+              >
                 <h3 className="text-2xl font-bold mb-2 text-blue-800 dark:text-blue-200">
                   Fisioterapia Cardiorrespiratória
                 </h3>
                 <p className="text-neutral-700 dark:text-neutral-300">
                   Uma abordagem especializada para reabilitação e prevenção de disfunções cardíacas e respiratórias.
                 </p>
-              </div>
+              </motion.div>
             </div>
           </motion.div>
         </section>
@@ -317,31 +369,40 @@ export default function Home() {
             O que você encontrará aqui
           </motion.h2>
           
-          {/* React Spring Cards com efeito de trail */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {trail.map((style, index) => (
-              <animated.div
+          {/* Cards com animação de entrada em cascata */}
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+            variants={cardsContainerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
+            {cards.map((card, index) => (
+              <motion.div
                 key={index}
-                style={style}
-                className="bg-white dark:bg-neutral-800 p-6 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700 h-full flex flex-col"
-                onMouseEnter={() => {
-                  document.body.style.cursor = "pointer";
-                }}
-                onMouseLeave={() => {
-                  document.body.style.cursor = "default";
-                }}
+                variants={cardVariants}
+                className="bg-white dark:bg-neutral-800 p-7 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-neutral-200 dark:border-neutral-700 h-full flex flex-col relative overflow-hidden"
+                whileHover={{ y: -5, transition: { duration: 0.2 } }}
               >
-                <animated.div 
-                  className="text-4xl mb-4"
-                  style={{
-                    transform: style.scale.to(s => `scale(${s})`)
+                {/* Elemento decorativo de fundo */}
+                <div className="absolute -right-12 -top-12 w-40 h-40 rounded-full bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 opacity-50"></div>
+                
+                <motion.div 
+                  className="relative z-10 mb-4"
+                  initial={{ scale: 0.8 }}
+                  whileInView={{ scale: 1 }}
+                  transition={{ 
+                    type: "spring", 
+                    stiffness: 260, 
+                    damping: 20, 
+                    delay: 0.1 + index * 0.1 
                   }}
                 >
-                  {cards[index].icon}
-                </animated.div>
-                <h3 className="text-xl font-bold mb-2 text-neutral-900 dark:text-neutral-50">{cards[index].title}</h3>
-                <p className="text-neutral-700 dark:text-neutral-300 mb-4 flex-grow">{cards[index].description}</p>
-                <Link href={cards[index].link}>
+                  {card.icon}
+                </motion.div>
+                <h3 className="text-xl font-bold mb-3 text-neutral-900 dark:text-neutral-50 relative z-10">{card.title}</h3>
+                <p className="text-neutral-700 dark:text-neutral-300 mb-5 flex-grow relative z-10">{card.description}</p>
+                <Link href={card.link} className="relative z-10">
                   <Button variant="link" className="p-0 group" asChild>
                     <motion.div
                       initial="initial"
@@ -352,24 +413,25 @@ export default function Home() {
                     >
                       Acessar 
                       <motion.span
-                        initial={{ x: 0, opacity: 1 }}
-                        animate={{ x: [0, 5, 0], opacity: 1 }}
-                        transition={{ 
-                          repeat: Infinity, 
-                          repeatType: "mirror", 
-                          duration: 1.5,
-                          repeatDelay: 0.5
+                        initial={{ x: 0 }}
+                        whileHover={{ 
+                          x: [0, 5], 
+                          transition: { 
+                            repeat: Infinity, 
+                            repeatType: "reverse", 
+                            duration: 0.6 
+                          } 
                         }}
-                        className="ml-1"
+                        className="ml-1 inline-block"
                       >
                         →
                       </motion.span>
                     </motion.div>
                   </Button>
                 </Link>
-              </animated.div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </motion.section>
         
         <motion.section 
@@ -406,10 +468,9 @@ export default function Home() {
             <Link href="/modulos">
               <Button size="lg" className="px-8 bg-neutral-800" asChild>
                 <motion.div
-                  initial="initial"
-                  whileHover="hover"
-                  whileTap="tap"
-                  variants={buttonVariants}
+                  whileHover={{ scale: 1.03, boxShadow: "0px 4px 8px rgba(0,0,0,0.1)" }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
                   className="px-8 py-2 flex items-center justify-center"
                 >
                   Explorar Módulos

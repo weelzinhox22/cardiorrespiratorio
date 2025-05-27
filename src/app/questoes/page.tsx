@@ -48,6 +48,33 @@ const buttonVariants = {
   }
 };
 
+// Variantes para os cards de questões
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
+    }
+  }
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 50, scale: 0.9 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      type: "spring",
+      stiffness: 80,
+      damping: 12,
+      duration: 0.6
+    }
+  }
+};
+
 // Exemplo de questões para a página
 const questoesData = [
   {
@@ -136,14 +163,6 @@ export default function Questoes() {
       setLoadingQuestion(false);
     }, 1000);
   };
-  
-  // Configuração do React Spring para a animação em cascata
-  const trail = useTrail(questoes.length, {
-    from: { opacity: 0, y: 60, scale: 0.9 },
-    to: { opacity: 1, y: 0, scale: 1 },
-    config: { mass: 1.2, tension: 180, friction: 24 },
-    delay: 300,
-  });
 
   return (
     <>
@@ -195,48 +214,55 @@ export default function Questoes() {
             </div>
           </>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {trail.map((style, index) => (
-              <animated.div 
-                key={questoes[index].id} 
-                style={style}
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            viewport={{ once: true, amount: 0.1 }}
+          >
+            {questoes.map((questao, index) => (
+              <motion.div
+                key={questao.id}
                 className="h-full"
+                variants={cardVariants}
+                custom={index}
               >
-                <Card className="h-full overflow-hidden border border-neutral-200 dark:border-neutral-700 transition-all hover:shadow-lg flex flex-col">
+                <Card className="h-full overflow-hidden border border-neutral-200 dark:border-neutral-700 transition-all hover:shadow-lg shadow-md rounded-xl flex flex-col">
                   <CardHeader>
                     <div className="flex justify-between items-start">
-                      <CardTitle>{questoes[index].titulo}</CardTitle>
+                      <CardTitle>{questao.titulo}</CardTitle>
                       <motion.div 
-                        className="px-2 py-1 rounded text-xs font-medium"
+                        className="px-3 py-1 rounded-full text-xs font-semibold shadow-sm"
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.3 }}
                         style={{
                           backgroundColor: 
-                            questoes[index].dificuldade === "Fácil" 
+                            questao.dificuldade === "Fácil" 
                               ? "var(--green-50)" 
-                              : questoes[index].dificuldade === "Média" 
+                              : questao.dificuldade === "Média" 
                                 ? "var(--yellow-50)" 
                                 : "var(--red-50)",
                           color: 
-                            questoes[index].dificuldade === "Fácil" 
+                            questao.dificuldade === "Fácil" 
                               ? "var(--green-700)" 
-                              : questoes[index].dificuldade === "Média" 
+                              : questao.dificuldade === "Média" 
                                 ? "var(--yellow-700)" 
                                 : "var(--red-700)"
                         }}
                       >
-                        {questoes[index].dificuldade}
+                        {questao.dificuldade}
                       </motion.div>
                     </div>
                     <CardDescription>
-                      <span className="font-medium">{questoes[index].tipo}</span>
+                      <span className="font-medium">{questao.tipo}</span>
                     </CardDescription>
                   </CardHeader>
                   
                   <CardContent className="flex-grow">
                     <p className="text-neutral-700 dark:text-neutral-300 line-clamp-3">
-                      {questoes[index].conteudo}
+                      {questao.conteudo}
                     </p>
                   </CardContent>
 
@@ -246,52 +272,69 @@ export default function Questoes() {
                         <Button 
                           variant="outline" 
                           className="flex-1"
+                          asChild
                         >
-                          <Motion
-                            initial="initial"
-                            whileHover="hover"
-                            whileTap="tap"
-                            variants={buttonVariants}
-                            className="py-2 flex items-center justify-center w-full"
-                            onClick={() => handleOpenQuestion(questoes[index].id)}
+                          <motion.div
+                            whileHover={{ scale: 1.03, boxShadow: "0px 4px 8px rgba(0,0,0,0.1)" }}
+                            whileTap={{ scale: 0.97 }}
+                            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                            className="flex items-center gap-1 py-2 justify-center"
                           >
-                            Visualizar
-                          </Motion>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-eye mr-1">
+                              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+                              <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                            Ver Questão
+                          </motion.div>
                         </Button>
                       </MotionDialogTrigger>
-                      <MotionDialogContent className="max-w-3xl">
+                      <MotionDialogContent>
                         <Suspense fallback={
-                          <div className="py-12">
-                            <LoadingContainer>
-                              <DotsLoading size="lg" />
-                              <p className="mt-4 text-neutral-600 dark:text-neutral-400">Carregando detalhes da questão...</p>
-                            </LoadingContainer>
-                          </div>
+                          <LoadingContainer>
+                            <DotsLoading size="lg" />
+                          </LoadingContainer>
                         }>
                           <QuestionDetailsModal 
-                            questao={questoes[index]}
+                            questao={questao} 
                             loading={loadingQuestion}
                           />
                         </Suspense>
                       </MotionDialogContent>
                     </MotionDialog>
-                    
-                    <Link href={`/questoes/resolucao?id=${questoes[index].id}`} className="flex-1">
-                      <Button className="w-full bg-neutral-800 hover:bg-black">
-                        <Motion
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          className="py-2 flex items-center justify-center w-full"
+
+                    <Link 
+                      href={`/questoes/resolucao?id=${questao.id}`} 
+                      className="flex-1"
+                      onClick={() => handleOpenQuestion(questao.id)}
+                    >
+                      <Button 
+                        className="w-full hover:bg-black bg-neutral-800" 
+                        size="sm"
+                        asChild
+                      >
+                        <motion.div
+                          whileHover={{ scale: 1.03, boxShadow: "0px 4px 8px rgba(0,0,0,0.1)" }}
+                          whileTap={{ scale: 0.97 }}
+                          transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                          className="flex items-center gap-1 py-2 justify-center w-full"
                         >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-pencil mr-1">
+                            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                            <path d="m15 5 4 4"/>
+                          </svg>
                           Resolver
-                        </Motion>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-right ml-1">
+                            <path d="M5 12h14"/>
+                            <path d="m12 5 7 7-7 7"/>
+                          </svg>
+                        </motion.div>
                       </Button>
                     </Link>
                   </CardFooter>
                 </Card>
-              </animated.div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         )}
       </main>
     </>

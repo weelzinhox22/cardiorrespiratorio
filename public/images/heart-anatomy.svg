@@ -1,0 +1,39 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Contorno do coração -->
+  <path d="M100 180C147.32 148.5 180 121.29 180 84.64C180 58.28 160.89 40 136.23 40C120.13 40 106.26 48.86 100 63.39C93.74 48.86 79.87 40 63.77 40C39.11 40 20 58.28 20 84.64C20 121.29 52.68 148.5 100 180Z" fill="#F06292" stroke="#E91E63" stroke-width="3"/>
+
+  <!-- Câmaras superiores (átrios) -->
+  <path d="M55 80C60 70 65 65 75 60" stroke="#C2185B" stroke-width="2" stroke-linecap="round"/>
+  <path d="M145 80C140 70 135 65 125 60" stroke="#C2185B" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Câmaras inferiores (ventrículos) -->
+  <path d="M80 130C75 120 70 105 70 95" stroke="#C2185B" stroke-width="2" stroke-linecap="round"/>
+  <path d="M120 130C125 120 130 105 130 95" stroke="#C2185B" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Septo (divisão entre as câmaras) -->
+  <path d="M100 75L100 140" stroke="#C2185B" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Vasos principais -->
+  <path d="M70 50C60 40 55 35 55 25" stroke="#5C6BC0" stroke-width="3" stroke-linecap="round"/>
+  <path d="M130 50C140 40 145 35 145 25" stroke="#5C6BC0" stroke-width="3" stroke-linecap="round"/>
+  
+  <!-- Artéria coronária esquerda -->
+  <path d="M95 60C85 65 80 70 75 80" stroke="#E53935" stroke-width="1.5" stroke-linecap="round"/>
+  
+  <!-- Artéria coronária direita -->
+  <path d="M105 60C115 65 120 70 125 80" stroke="#E53935" stroke-width="1.5" stroke-linecap="round"/>
+  
+  <!-- Animação de batimento -->
+  <circle cx="100" cy="100" r="60" fill="url(#pulse)" opacity="0.2">
+    <animate attributeName="r" values="60;65;60" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.1;0.3;0.1" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Gradiente de pulsação -->
+  <defs>
+    <radialGradient id="pulse" cx="0.5" cy="0.5" r="0.5" fx="0.5" fy="0.5">
+      <stop offset="0%" stop-color="#E91E63" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#E91E63" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg> 

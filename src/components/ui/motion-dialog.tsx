@@ -3,7 +3,7 @@
 import * as React from "react"
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { X } from "lucide-react"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 
@@ -32,8 +32,8 @@ const MotionDialogOverlay = React.forwardRef<
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="fixed inset-0 z-50 bg-black/80"
+      transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+      className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm"
     />
   </DialogPrimitive.Overlay>
 ))
@@ -42,9 +42,9 @@ MotionDialogOverlay.displayName = DialogPrimitive.Overlay.displayName
 const dialogVariants = {
   hidden: {
     opacity: 0,
-    scale: 0.95,
+    scale: 0.8,
     y: 10,
-    transition: { duration: 0.2, ease: "easeOut" }
+    transition: { duration: 0.25, ease: [0.4, 0, 0.2, 1] }
   },
   visible: {
     opacity: 1,
@@ -52,16 +52,16 @@ const dialogVariants = {
     y: 0,
     transition: { 
       type: "spring",
-      damping: 25,
-      stiffness: 300,
-      duration: 0.3 
+      damping: 20,
+      stiffness: 200,
+      duration: 0.35
     }
   },
   exit: {
     opacity: 0,
-    scale: 0.95,
+    scale: 0.8,
     y: 10,
-    transition: { duration: 0.2, ease: "easeIn" }
+    transition: { duration: 0.25, ease: [0.4, 0, 0.2, 1] }
   }
 }
 
@@ -86,15 +86,22 @@ const MotionDialogContent = React.forwardRef<
         animate="visible"
         exit="exit"
         className={cn(
-          "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg sm:rounded-lg",
+          "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border border-neutral-200 dark:border-neutral-700 bg-background p-7 shadow-[0_10px_30px_rgba(0,0,0,0.2)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.4)] sm:rounded-xl rounded-lg",
           className
         )}
       >
         {children}
-        <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
-          <X className="h-4 w-4" />
-          <span className="sr-only">Close</span>
-        </DialogPrimitive.Close>
+        <motion.div
+          whileHover={{ scale: 1.1, backgroundColor: "rgba(0,0,0,0.06)" }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ duration: 0.15 }}
+          className="absolute right-4 top-4 rounded-full p-1.5 opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none"
+        >
+          <DialogPrimitive.Close className="data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+            <X className="h-4 w-4" />
+            <span className="sr-only">Close</span>
+          </DialogPrimitive.Close>
+        </motion.div>
       </motion.div>
     </DialogPrimitive.Content>
   </MotionDialogPortal>

@@ -1,23 +1,6 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ClientModuloContent } from "./client-components";
-
-// Definição dos tipos
-interface Secao {
-  titulo: string;
-  conteudo: string;
-}
-
-interface Modulo {
-  titulo: string;
-  descricao: string;
-  seccoes: Secao[];
-}
-
-interface ModulosData {
-  [key: string]: Modulo;
-}
+import { ClientModuloContent, MotionBackButton } from "./client-components";
+import { ModulosData, Modulo, Secao } from "../types";
 
 // Dados de exemplo para os módulos
 const modulosData: ModulosData = {
@@ -175,11 +158,7 @@ export default function ModuloPage({
 
   return (
     <main className="container mx-auto py-10 px-4 max-w-4xl">
-      <Link href="/modulos">
-        <Button variant="ghost" className="mb-6">
-          ← Voltar para Módulos
-        </Button>
-      </Link>
+      <MotionBackButton />
       
       <ClientModuloContent modulo={modulo} />
     </main>

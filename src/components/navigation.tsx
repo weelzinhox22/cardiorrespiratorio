@@ -2,77 +2,94 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { Button } from "./ui/button";
+import { useState, useEffect } from "react";
+import { MoonIcon, SunIcon } from "lucide-react";
+import { useTheme } from "next-themes";
+import { cn } from "@/lib/utils";
+import { MotionNavLink } from "./ui/motion-hover";
 
-const links = [
-  { href: "/", label: "Início" },
-  { href: "/modulos", label: "Módulos de Estudo" },
-  { href: "/questoes", label: "Banco de Questões" },
-  { href: "/recursos", label: "Recursos" },
-];
-
-// Animações para os itens do menu
-const containerVariants = {
+// Variantes para animação do container
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
       staggerChildren: 0.1,
-      delayChildren: 0.2
+      delayChildren: 0.3
     }
   }
 };
 
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
+// Variantes para animação de cada item
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: -10 },
   visible: { 
-    y: 0, 
-    opacity: 1,
+    opacity: 1, 
+    y: 0,
     transition: {
       type: "spring",
-      stiffness: 300,
-      damping: 24
-    }
-  }
-};
-
-// Variantes para animações de botões
-const buttonHoverVariants = {
-  initial: { 
-    scale: 1,
-    boxShadow: "0px 0px 0px rgba(0,0,0,0)" 
-  },
-  hover: { 
-    scale: 1.08, 
-    boxShadow: "0px 5px 10px rgba(0,0,0,0.1)",
-    transition: {
-      type: "spring", 
-      stiffness: 400, 
-      damping: 10
-    }
-  },
-  tap: { 
-    scale: 0.95, 
-    boxShadow: "0px 2px 5px rgba(0,0,0,0.05)",
-    transition: {
-      type: "spring", 
-      stiffness: 500, 
+      stiffness: 100,
       damping: 15
     }
   }
+};
+
+// Links de navegação
+const navigationLinks = [
+  {
+    name: "Início",
+    href: "/"
+  },
+  {
+    name: "Módulos",
+    href: "/modulos"
+  },
+  {
+    name: "Questões",
+    href: "/questoes"
+  },
+  {
+    name: "Recursos",
+    href: "/recursos"
+  }
+];
+
+// Componente de mudança de tema
+const ThemeToggle = () => {
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // Montagem do componente
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return <div className="w-9 h-9" />;
+
+  return (
+    <motion.button
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.9 }}
+      transition={{ type: "spring", stiffness: 400, damping: 17 }}
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      className="p-2 rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200"
+    >
+      {theme === "dark" ? (
+        <SunIcon className="h-5 w-5" />
+      ) : (
+        <MoonIcon className="h-5 w-5" />
+      )}
+    </motion.button>
+  );
 };
 
 export function Navigation() {
   const pathname = usePathname();
 
   return (
-    <motion.header 
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="sticky top-0 z-50 w-full border-b bg-white/50 backdrop-blur-md dark:bg-neutral-950/50"
-    >
+    <header className="sticky top-0 z-50 w-full border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-black bg-opacity-80 dark:bg-opacity-80 backdrop-blur-md">
       <div className="container flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <motion.div
@@ -100,44 +117,35 @@ export function Navigation() {
           initial="hidden"
           animate="visible"
         >
-          {links.map((link) => {
+          {navigationLinks.map((link) => {
             const isActive = pathname === link.href;
+            
             return (
-              <motion.div
+              <motion.div 
                 key={link.href}
                 variants={itemVariants}
+                custom={navigationLinks.indexOf(link)}
               >
-                <Link href={link.href}>
-                  <Button
-                    variant={isActive ? "default" : "ghost"}
-                    className="relative overflow-hidden"
-                    asChild
+                <MotionNavLink active={isActive}>
+                  <Link 
+                    href={link.href}
+                    className={cn(
+                      "px-3 py-2 text-sm font-medium rounded-md transition-colors",
+                      isActive 
+                        ? "text-primary dark:text-primary" 
+                        : "text-neutral-600 dark:text-neutral-400 hover:text-primary dark:hover:text-primary"
+                    )}
                   >
-                    <motion.div
-                      initial="initial"
-                      whileHover={isActive ? {} : "hover"}
-                      whileTap="tap"
-                      variants={buttonHoverVariants}
-                      className="px-4 py-2 flex items-center justify-center"
-                    >
-                      {link.label}
-                      {isActive && (
-                        <motion.div
-                          layoutId="nav-indicator"
-                          className="absolute -bottom-[1px] left-0 right-0 h-[2px] bg-primary"
-                          initial={{ opacity: 0, width: "0%" }}
-                          animate={{ opacity: 1, width: "100%" }}
-                          transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                        />
-                      )}
-                    </motion.div>
-                  </Button>
-                </Link>
+                    {link.name}
+                  </Link>
+                </MotionNavLink>
               </motion.div>
             );
           })}
+          
+          <ThemeToggle />
         </motion.nav>
       </div>
-    </motion.header>
+    </header>
   );
 } 

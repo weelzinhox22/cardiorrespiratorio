@@ -212,6 +212,95 @@ export function MotionLink({
   );
 }
 
+// Link de navegação com efeito de deslizar
+export function MotionNavLink({
+  children,
+  className,
+  active = false,
+  ...props
+}: {
+  children: React.ReactNode;
+  className?: string;
+  active?: boolean;
+} & MotionProps) {
+  return (
+    <motion.div
+      className={cn("relative", className)}
+      initial={{ opacity: 0.9 }}
+      whileHover={{ opacity: 1 }}
+      {...props}
+    >
+      {children}
+      <motion.div
+        className="absolute bottom-0 left-0 h-0.5 bg-primary"
+        initial={{ width: active ? "100%" : "0%", opacity: active ? 0.7 : 0 }}
+        whileHover={{ 
+          width: "100%", 
+          opacity: 0.7,
+          transition: { type: "spring", stiffness: 400, damping: 15 } 
+        }}
+        exit={{ width: active ? "100%" : "0%", opacity: active ? 0.7 : 0 }}
+        transition={{ 
+          duration: 0.3,
+          type: "spring",
+          stiffness: 500,
+          damping: 25
+        }}
+      />
+    </motion.div>
+  );
+}
+
+// Efeito de destaque pulsante para elementos importantes
+export function PulseHighlight({
+  children,
+  className,
+  intensity = "md",
+  color = "primary",
+  ...props
+}: {
+  children: React.ReactNode;
+  className?: string;
+  intensity?: "sm" | "md" | "lg";
+  color?: "primary" | "blue" | "green" | "amber";
+} & Omit<MotionProps, "animate">) {
+  
+  const intensityValues = {
+    sm: { scale: 1.03, opacity: 0.5, blur: "3px" },
+    md: { scale: 1.06, opacity: 0.7, blur: "5px" },
+    lg: { scale: 1.1, opacity: 0.8, blur: "8px" }
+  };
+  
+  const colorValues = {
+    primary: "bg-primary/40 dark:bg-primary/30",
+    blue: "bg-blue-400/40 dark:bg-blue-500/30",
+    green: "bg-green-400/40 dark:bg-green-500/30",
+    amber: "bg-amber-400/40 dark:bg-amber-500/30"
+  };
+  
+  return (
+    <motion.div className={cn("relative", className)} {...props}>
+      <motion.div 
+        className={cn(
+          "absolute inset-0 rounded-xl blur-md -z-10",
+          colorValues[color]
+        )}
+        animate={{ 
+          scale: [1, intensityValues[intensity].scale, 1],
+          opacity: [0.2, intensityValues[intensity].opacity, 0.2],
+        }}
+        transition={{ 
+          duration: 3,
+          repeat: Infinity, 
+          repeatType: "reverse",
+          ease: "easeInOut"
+        }}
+      />
+      {children}
+    </motion.div>
+  );
+}
+
 // Wrapper para cartões interativos
 export function MotionCard({
   children,
